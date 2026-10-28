@@ -78,6 +78,20 @@ public class AuthServiceImpl implements AuthService {
 
         );
     }
+
+    @Override
+    public AuthResponseDto createAdmin(RegisterRequestDto request){
+        User admin = createUser(request, Role.ADMIN);
+        String token = jwtService.generateToken(admin);
+        return new AuthResponseDto(
+                admin.getId(),
+                token,
+                admin.getName(),
+                admin.getEmail(),
+                admin.getRoles()
+        );
+    }
+
     private User createUser(RegisterRequestDto request, Role role) {
         String email = normalizeEmail(request.email());
 

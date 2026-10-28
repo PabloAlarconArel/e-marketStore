@@ -11,6 +11,8 @@ import org.marketstore.authservice.dto.response.RegisterResponseDto;
 import org.marketstore.authservice.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -66,3 +68,13 @@ public class AuthController {
                 .body(response);
 
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/admin")
+    public AuthResponseDto createAdmin(
+            @Valid @RequestBody RegisterRequestDto request
+    ) {
+        return authService.createAdmin(request);
+    }
+
+}
