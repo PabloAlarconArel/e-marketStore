@@ -14,3 +14,14 @@ public interface ProductService {
     List<ProductResponseDto> findAll();
 
     List<ProductResponseDto> findByCategory(String category);
+
+    ProductResponseDto findBySkuCode(String skuCode);
+
+    ProductResponseDto update(String id, ProductRequestDto request);
+
+    void delete(String id);
+
+
+}
+
+

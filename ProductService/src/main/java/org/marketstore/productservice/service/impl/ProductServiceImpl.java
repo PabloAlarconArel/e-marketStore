@@ -11,6 +11,7 @@ import org.marketstore.productservice.service.ProductService;
 import org.springframework.expression.ExpressionException;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -65,3 +66,51 @@ public class ProductServiceImpl implements ProductService {
                 .map(productMapper::toResponse)
                 .toList();
     }
+
+    @Override
+    public ProductResponseDto findBySkuCode(String skuCode){
+
+        Product product =productRepository.findBySkuCode(skuCode)
+                .orElseThrow(()->
+                        new IllegalArgumentException(
+                                "Producto no encontrado con código:" + skuCode
+                        )
+                );
+        return productMapper.toResponse(product);
+    }
+
+    @Override
+    public ProductResponseDto update(String id, ProductRequestDto request){
+
+        Product product =productRepository.findById(id)
+                .orElseThrow(()->
+                        new IllegalArgumentException(
+                                "Producto no encontrado :" + id
+                        )
+                );
+        product.setName(request.getName());
+        product.setDescription(request.getDescription());
+        product.setPrice(request.getPrice());
+        product.setUnit(request.getUnit());
+        product.setSkuCode(request.getSkuCode());
+        product.setSkuCodeType(request.getSkuCodeType());
+        product.setCategory(request.getCategory());
+        product.setUpdateAt(Instant.now());
+
+        Product updateProduct = productRepository.save(product);
+
+        return productMapper.toResponse(updateProduct);
+    }
+
+    @Override
+    public void delete (String id){
+        if (!productRepository.existsById(id)){
+            throw new IllegalArgumentException(
+                    "Producto no encontrado: " + id
+            );
+        }
+
+        productRepository.deleteById(id);
+    }
+
+}

@@ -10,6 +10,7 @@ public interface ProductRepository extends MongoRepository<Product,String> {
 
     Optional<Product> findBySkuCode (String skuCode);
 
+    boolean existsBySkuCode(String skuCode);
 
     List<Product>findByCategory(String category);
 }
