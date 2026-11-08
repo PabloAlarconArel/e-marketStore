@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class JwtService {
@@ -40,6 +42,23 @@ public class JwtService {
                 .subject(user.getId())
                 .claim("email", user.getEmail())
                 .claim("roles",user.getRoles())
+                .issuedAt(issuedAt)
+                .expiration(expirationDate)
+                .signWith(secretKey)
+                .compact();
+
+    }
+
+    public String generateServiceToken(String clientId, Set<String> roles){
+        Date issuedAt = new Date();
+        Date expirationDate = new Date(
+                issuedAt.getTime() + 5 *60 * 1000
+        );
+
+        return Jwts.builder()
+                .subject(clientId)
+                .claim("roles", roles)
+                .claim("token_type","service")
                 .issuedAt(issuedAt)
                 .expiration(expirationDate)
                 .signWith(secretKey)

@@ -36,9 +36,8 @@ public class SecurityConfig {
                                 "/logout",
                                 "/oauth2/**",
                                 "/api/auth/login",
-                                "/api/auth/register")
-
-
+                                "/api/auth/register",
+                                "/api/auth/service-token")
                         .permitAll()
                         .anyRequest()
                         .authenticated())
