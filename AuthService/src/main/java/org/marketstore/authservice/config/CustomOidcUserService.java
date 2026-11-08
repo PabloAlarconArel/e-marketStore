@@ -59,7 +59,7 @@ public class CustomOidcUserService implements OAuth2UserService<OidcUserRequest,
             identity = new UserIdentity();
             identity.setUserId(user.getId());
             identity.setProvider(AuthProvider.GOOGLE);
-            identity.setUserId(providerId);
+            identity.setProviderId(providerId);
             identity.setPasswordHash(null);
 
             userIdentityRepository.save(identity);
