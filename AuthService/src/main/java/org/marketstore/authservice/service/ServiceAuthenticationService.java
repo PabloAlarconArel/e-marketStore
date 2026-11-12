@@ -14,7 +14,7 @@ public class ServiceAuthenticationService {
 
     private final ServiceClientRepository serviceClientRepository;
     private final PasswordEncoder passwordEncoder;
-    private JwtService jwtService;
+    private final JwtService jwtService;
 
     public String authenticate(String clientId,String clientSecret){
 
