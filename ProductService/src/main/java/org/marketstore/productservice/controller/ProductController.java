@@ -51,7 +51,7 @@ public class ProductController {
                 .body(response);
     }
 
-    @GetMapping("code/{code}")
+    @GetMapping("code/{skuCode}")
     public ResponseEntity<ProductResponseDto> findBySkuCode(@PathVariable String skuCode){
         return ResponseEntity.ok(productService.findBySkuCode(skuCode));
     }

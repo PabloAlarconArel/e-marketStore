@@ -27,11 +27,7 @@ public class ProductRequestDto {
     @NotNull(message = "El precio es obligatorio")
     @DecimalMin(value = "0.0", inclusive = false, message = "El precio debe ser mayor que 0")
     private BigDecimal price;
-
-    @NotNull(message = "El stock es obligatorio")
-    @DecimalMin(value = "0.0", inclusive = false, message = "El stock no puede ser negativo")
-    private BigDecimal stock;
-
+    
     @NotNull(message = "La unidad de venta es obligatoria")
     private UnitType unit;
 
