@@ -31,3 +31,31 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+### Enviroment ###
+.env
+.env.*
+
+
+### Spring Boot ###
+*.log
+logs/
+
+
+### OS generated files ###
+.DS_Store
+Thumbs.db
+
+### Docker ###
+docker-compose.override.yml
+
+### Temporary files ###
+*.tmp
+*.temp
+*.swp
+
+### Java ###
+*.class
+hs_err_pid*
+replay_pid*
