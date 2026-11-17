@@ -9,6 +9,8 @@ import reactor.core.publisher.Mono;
 
 public interface InventoryService {
 
+     Mono<InventoryResponseDto> getInventoryBySkuCode(String skuCode);
+
      Mono<InventoryResponseDto>createInventory(InventoryCreateRequestDto request);
 
      Mono<InventoryResponseDto>updateInventory(Long id, InventoryUpdateRequestDto request);

@@ -1,21 +1,36 @@
 package org.marketstore.inventoryservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.marketstore.inventoryservice.dto.request.InventoryCreateRequestDto;
+import org.marketstore.inventoryservice.dto.request.InventoryUpdateRequestDto;
 import org.marketstore.inventoryservice.dto.response.InventoryResponseDto;
 import org.marketstore.inventoryservice.mapper.InventoryMapper;
+import org.marketstore.inventoryservice.model.Inventory;
 import org.marketstore.inventoryservice.repository.InventoryRepository;
 import org.marketstore.inventoryservice.service.InventoryService;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 
 @Service
 @RequiredArgsConstructor
 public class InventoryServiceImpl implements InventoryService {
+
     private final InventoryRepository inventoryRepository;
     private final InventoryMapper inventoryMapper;
+
+    @Override
+    public Mono<InventoryResponseDto> getInventoryBySkuCode(String skuCode) {
+        return inventoryRepository.findBySkuCode(skuCode)
+                .switchIfEmpty(Mono.error(
+                        new RuntimeException("Inventario no encontrado")
+                ))
+                .map(inventoryMapper::toResponse);
+    }
 
     @Override
     public Mono<InventoryResponseDto>createInventory(InventoryCreateRequestDto request){
