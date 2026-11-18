@@ -15,3 +15,13 @@ public interface InventoryRepository extends ReactiveCrudRepository<Inventory,Lo
 
     Mono<Boolean> existsBySkuCode(String skuCode);
 
+    @Modifying
+    @Query("""
+            UPDATE inventory
+            SET available_quantity = available_quantity - :quantity,
+                reserved_quantity = reserved_quantity + :quantity,
+                update_at = CURRENT_TIMESTAMP
+            WHERE sku_code = :skuCode
+                  AND available_quantity >= :quantity
+            """)
+    Mono<Integer> reserveStock(String skuCode, BigDecimal quantity);
