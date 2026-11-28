@@ -9,7 +9,10 @@ import org.marketstore.productservice.model.Product;
 import org.marketstore.productservice.repository.ProductRepository;
 import org.marketstore.productservice.service.ProductService;
 import org.springframework.expression.ExpressionException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.util.List;
@@ -72,7 +75,8 @@ public class ProductServiceImpl implements ProductService {
 
         Product product =productRepository.findBySkuCode(skuCode)
                 .orElseThrow(()->
-                        new IllegalArgumentException(
+                        new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
                                 "Producto no encontrado con código:" + skuCode
                         )
                 );
